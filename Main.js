@@ -26,8 +26,11 @@ let screenWidth = canvas.width;
 let screenHeight = canvas.height;
 
 //GLOBAL VARS
+let date;
+let currentDate;
+let currentTime;
 let lastTime = (new Date()).getTime();
-let currentTime = 0;
+let now = 0;
 let delta = 0;
 let running = false;
 let tempScale = 'fahrenheit';
@@ -40,12 +43,17 @@ let barPaddingY = 10;
 let textPaddingX = 50;
 let textPaddingY = 25;
 let barNamePadding = 10;
+let currentGradient;
+let dayGradient;
+let nightGradient;
 
 //API VARS
 let temp;
 let maxTemp;
 let minTemp;
 let humidity;
+
+
 
 /**
  * FETCH DATA FROM OPENWEATHER
@@ -81,6 +89,7 @@ const init = () => {
         return;
     } else {
         running = true;
+        createGradients();
         run();
     }
 }
@@ -91,11 +100,24 @@ const init = () => {
 const run = () => {
     if (running) {
         requestAnimationFrame(run);
-        currentTime = (new Date()).getTime();
-        delta = (currentTime - lastTime) / 1000 * 60;
+        now = (new Date()).getTime();
+        delta = (now - lastTime) / 1000 * 60;
+        update();
         render();
-        lastTime = currentTime;
+        lastTime = now;
     }
+}
+
+const createGradients = () => {
+    //DAY GRADIENT
+    dayGradient = context.createLinearGradient(0, screenHeight, 0, 100);
+    dayGradient.addColorStop(0, "cyan");
+    dayGradient.addColorStop(1, "blue");
+
+    //NIGHT GRADIENT
+    nightGradient = context.createLinearGradient(0, screenHeight, 0, 100);
+    nightGradient.addColorStop(0, "darkslateblue");
+    nightGradient.addColorStop(1, "black");
 }
 
 /**
@@ -106,18 +128,7 @@ const render = () => {
      * RENDER BACKGROUND
      **/
 
-    //DAY GRADIENT
-    let dayGradient = context.createLinearGradient(0, screenHeight, 0, 100);
-    dayGradient.addColorStop(0, "cyan");
-    dayGradient.addColorStop(1, "blue");
-
-    //NIGHT GRADIENT
-    let nightGradient = context.createLinearGradient(0, screenHeight, 0, 100);
-    nightGradient.addColorStop(0, "darkslateblue");
-    nightGradient.addColorStop(1, "black");
-
-
-    context.fillStyle = dayGradient;
+    context.fillStyle = currentGradient;
     context.fillRect(0, 0, screenWidth, screenHeight);
 
     /**
@@ -203,6 +214,29 @@ const render = () => {
     context.fillStyle = 'white';
     context.font = 'normal 25px Courier';
     context.fillText('HUMIDITY', barPaddingX * 18.3 + textPaddingX, (screenHeight - barNamePadding), 120);
+
+    //TIME
+    context.fillStyle = 'white';
+    context.font = 'normal 20px Courier';
+    context.fillText(currentTime, 5, 40, 120);
+
+    //DATE
+    context.fillStyle = 'white';
+    context.font = 'normal 20px Courier';
+    context.fillText(currentDate, 5, 20, 120);
+}
+
+const update = () => {
+    date = new Date();
+    currentDate = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
+    currentTime = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+    if (date.getHours() >= 19 || date.getHours() <= 5) {
+        currentGradient = nightGradient;
+
+    } else {
+        currentGradient = dayGradient;
+    }
 }
 
 // ENTRY POINT
