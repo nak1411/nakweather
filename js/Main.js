@@ -21,7 +21,6 @@ let cityTime;
 let localTime;
 let lastTime = (new Date()).getTime();
 let now = 0;
-let delta = 0;
 let running = false;
 let tempScale = 'fahrenheit';
 let humidityScale = 5;
@@ -81,7 +80,7 @@ const init = () => {
         return;
     } else {
         running = true;
-        city = 'Seattle';
+        city = 'Frankfurt';
         data = new Data(city);
         data.weather.then(function (result) {
             temp = result.temp;
@@ -106,7 +105,6 @@ const run = () => {
     if (running) {
         requestAnimationFrame(run);
         now = (new Date()).getTime();
-        delta = (now - lastTime) / 1000 * 60;
         update();
         render();
         lastTime = now;
@@ -238,7 +236,7 @@ const render = () => {
     //TIMEZONE
     context.fillStyle = 'white';
     context.font = 'normal 20px Courier';
-    context.fillText(timeZone, 5, 105, 220);
+    context.fillText(timeZone, 5, 105, 400);
 
     //CITY
     context.fillStyle = 'white';
