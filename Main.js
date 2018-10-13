@@ -20,13 +20,15 @@ let lastTime = (new Date()).getTime();
 let currentTime = 0;
 let delta = 0;
 let running = false;
-let tempScale = 'celsius';
+let tempScale = 'fahrenheit';
+let barScale = 5;
 let barWidth;
 let barHeight;
 let barPaddingX = 20;
 let barPaddingY = 10;
-let textPaddingX = 28;
+let textPaddingX = 50;
 let textPaddingY = 25;
+let barNamePadding = 10;
 
 //API VARS
 let temp;
@@ -42,8 +44,8 @@ async function weatherData() {
     let json = await response.json();
     console.log(json);
     temp = Math.floor(json.main.temp - 273.15);
-    maxTemp = json.main.temp_max;
-    minTemp = json.main.temp_min;
+    maxTemp = Math.floor(json.main.temp_max - 273.15);
+    minTemp = Math.floor(json.main.temp_min - 273.15);
     humidity = json.main.humidity;
 }
 
@@ -89,32 +91,111 @@ const run = () => {
  * RENDERING
  */
 const render = () => {
-    //CLEAR SCREEN
-    context.fillStyle = '#000';
+    /**
+     * RENDER BACKGROUND
+     **/
+
+    //DAY GRADIENT
+    let dayGradient = context.createLinearGradient(0, screenHeight, 0, 100);
+    dayGradient.addColorStop(0, "cyan");
+    dayGradient.addColorStop(1, "blue");
+
+    //NIGHT GRADIENT
+    let nightGradient = context.createLinearGradient(0, screenHeight, 0, 100);
+    nightGradient.addColorStop(0, "darkslateblue");
+    nightGradient.addColorStop(1, "black");
+
+
+    context.fillStyle = dayGradient;
     context.fillRect(0, 0, screenWidth, screenHeight);
 
-    //RENDER TEMPERATURE BARS
-    context.fillStyle = '#fff';
-    context.fillRect(barPaddingX, screenHeight - barHeight, barWidth, barHeight);
+    /**
+     * RENDER BARS
+     **/
 
-    //RENDER HUMIDITY BARS
-    context.fillStyle = '#888';
-    context.fillRect(barPaddingX + 120, screenHeight - humidity, barWidth, humidity);
+    //MAX GRADIENT
+    let maxGradient = context.createLinearGradient(0, screenHeight, 0, 10 * barScale);
+    maxGradient.addColorStop(0, "black");
+    maxGradient.addColorStop(1, "red");
 
-    //RENDER TEMPERATURE TEXT
+    //MIN GRADIENT
+    let minGradient = context.createLinearGradient(0, screenHeight, 0, 10 * barScale);
+    minGradient.addColorStop(0, "black");
+    minGradient.addColorStop(1, "cyan");
+
+    //TEMP GRADIENT
+    let tempGradient = context.createLinearGradient(0, screenHeight, 0, 10 * barScale);
+    tempGradient.addColorStop(0, "black");
+    tempGradient.addColorStop(1, "orange");
+
+    //HUMIDITY GRADIENT
+    let humGradient = context.createLinearGradient(0, screenHeight, 0, 60 * barScale);
+    humGradient.addColorStop(0, "black");
+    humGradient.addColorStop(1, "green");
+
+    //MAXTEMP
+    context.fillStyle = maxGradient;
+    context.fillRect(barPaddingX, screenHeight - convert(tempScale, maxTemp) * barScale, barWidth / 2, convert(tempScale, maxTemp) * barScale);
+
+    //TEMP
+    context.fillStyle = tempGradient;
+    context.fillRect((barWidth / 2) + barPaddingX, screenHeight - convert(tempScale, temp) * barScale, barWidth, convert(tempScale, temp) * barScale);
+
+    //MINTEMP
+    context.fillStyle = minGradient;
+    context.fillRect(barWidth + barPaddingX + barWidth / 2, screenHeight - convert(tempScale, minTemp) * barScale, barWidth / 2, convert(tempScale, minTemp) * 10);
+
+    //HUMIDITY
+    context.fillStyle = humGradient;
+    context.fillRect(barPaddingX * 20, screenHeight - humidity * barScale, barWidth, humidity * barScale);
+
+    /**
+     * RENDER TEXT
+     **/
+
+    //MAXTEMP
     context.fillStyle = 'black';
     context.font = 'normal bold 30px Courier';
-    context.fillText(`${convert(tempScale, temp)}°`, barPaddingX + textPaddingX, (screenHeight - barHeight) + textPaddingY, 50);
+    context.fillText(`${convert(tempScale, maxTemp)}°`, barPaddingX + (textPaddingX / 4), (screenHeight - convert(tempScale, maxTemp) * barScale) + textPaddingY, 50);
 
-    //RENDER HUMIDITY TEXT
-    context.fillStyle = 'blue';
+    //MAXTEMP NAME
+    context.fillStyle = 'white';
+    context.font = 'normal 25px Courier';
+    context.fillText('HIGH', barPaddingX + (textPaddingX / 4), (screenHeight - barNamePadding), 50);
+
+    //MINTEMP
+    context.fillStyle = 'black';
     context.font = 'normal bold 30px Courier';
-    context.fillText(`${humidity}%`, barPaddingX + 118 + textPaddingX, (screenHeight - humidity) + textPaddingY, 50);
+    context.fillText(`${convert(tempScale, minTemp)}°`, (textPaddingX * 2.2) + barWidth, (screenHeight - convert(tempScale, minTemp) * barScale) + textPaddingY, 50);
+
+    //MINTEMP NAME
+    context.fillStyle = 'white';
+    context.font = 'normal 25px Courier';
+    context.fillText('LOW', (textPaddingX * 2.2) + barWidth, (screenHeight - barNamePadding), 50);
+
+    //TEMP
+    context.fillStyle = 'black';
+    context.font = 'normal bold 30px Courier';
+    context.fillText(`${convert(tempScale, temp)}°`, (barWidth / 2) + barPaddingX + textPaddingX, (screenHeight - convert(tempScale, temp) * barScale) + textPaddingY, 50);
+
+    //TEMP NAME
+    context.fillStyle = 'white';
+    context.font = 'normal 25px Courier';
+    context.fillText('TEMPERATURE', (barWidth / 2) + (textPaddingX / 1.5), (screenHeight - barNamePadding), 120);
+
+    //HUMIDITY
+    context.fillStyle = 'black';
+    context.font = 'normal bold 30px Courier';
+    context.fillText(`${humidity}%`, barPaddingX * 20 + textPaddingX, (screenHeight - humidity * barScale) + textPaddingY, 50);
+
+    //HUMIDITY NAME
+    context.fillStyle = 'white';
+    context.font = 'normal 25px Courier';
+    context.fillText('HUMIDITY', barPaddingX * 18.3 + textPaddingX, (screenHeight - barNamePadding), 120);
 }
 
 const update = () => {
-    barWidth = 100;
-    barHeight = convert(tempScale, temp) * 10;
+    barWidth = 150;
 }
 
 // ENTRY POINT
