@@ -3,13 +3,44 @@
   padding: 0;
   background-color: #303030;
   text-align: center;
+  justify-content: center;
 }
 
 #game {
-  cursor: none;
-  display: block;
-  margin: auto;
-  margin-top: 20%;
+  width: 50em;
+}
+
+#city-form {
+  margin-top: .5em;
+  font-size: 2em;
+  color: darkred;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#city-field {
+  outline: none;
+  vertical-align: middle;
+  padding: 1em;
+  background-color: aliceblue;
+  border: black solid;
+  border-radius: .5em;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#city-search {
+  outline: none;
+  vertical-align: middle;
+  padding: 1em;
+  background-color: aliceblue;
+  border: black solid;
+  border-radius: .5em;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#city-search:active {
+  background-color: lightslategray;
+  border: white solid;
+
 }
 
 #title {
@@ -20,7 +51,8 @@
 }
 
 #nak {
-  padding-top: 2em;
+  padding-top: 1em;
+  padding-bottom: .5em;
   font-size: 1.5em;
   color: brown;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -35,13 +67,14 @@
   border-radius: .15em;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 800px) {
+
   #game {
-    width: 20em;
+    width: 30em;
   }
 
   #title {
-    font-size: 2.5em;
+    font-size: 2em;
   }
 
   #nak {
@@ -51,9 +84,61 @@
   #gohome {
     font-size: 1em;
   }
+
+  #city-form {
+    margin-top: .3em;
+    font-size: 2em;
+  }
+
+  #city-field {
+    padding: .5em;
+    border-radius: .2em;
+  }
+
+  #city-search {
+    padding: .5em;
+    border-radius: .2em;
+  }
+}
+
+@media (max-width: 500px) {
+
+  #game {
+    width: 20em;
+  }
+
+  #title {
+    font-size: 2em;
+  }
+
+  #nak {
+    font-size: 1em;
+  }
+
+  #gohome {
+    font-size: 1em;
+  }
+
+  #city-form {
+    display: grid;
+    margin-top: .1em;
+    font-size: 1.5em;
+  }
+
+  #city-field {
+    padding: .3em;
+    border-radius: .2em;
+  }
+
+  #city-search {
+    margin-top: .2em;
+    padding: 1em;
+    border-radius: .2em;
+  }
 }
 
 @media (max-width: 350px) {
+
   #game {
     width: 15em;
   }
@@ -68,5 +153,22 @@
 
   #gohome {
     font-size: .5em;
+  }
+
+  #city-form {
+    display: grid;
+    margin-top: .1em;
+    font-size: 1.5em;
+  }
+
+  #city-field {
+    padding: .3em;
+    border-radius: .2em;
+  }
+
+  #city-search {
+    margin-top: .2em;
+    padding: 1em;
+    border-radius: .2em;
   }
 }
