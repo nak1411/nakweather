@@ -17,7 +17,8 @@ let screenHeight = canvas.height;
 //GLOBAL VARS
 let date;
 let currentDate;
-let currentTime;
+let cityTime;
+let localTime;
 let lastTime = (new Date()).getTime();
 let now = 0;
 let delta = 0;
@@ -42,6 +43,7 @@ let humidity;
 let timeZone;
 let data;
 let city;
+let utcOff;
 
 document.getElementById("city-form").addEventListener("submit", function (e) {
     e.preventDefault();
@@ -55,6 +57,7 @@ document.getElementById("city-form").addEventListener("submit", function (e) {
     });
     data.timeZone.then(function (result) {
         timeZone = result.timezone;
+        utcOff = result.tzOff;
     });
 });
 /**
@@ -88,6 +91,7 @@ const init = () => {
         });
         data.timeZone.then(function (result) {
             timeZone = result.timezone;
+            utcOff = result.tzOff;
         });
 
         createGradients();
@@ -216,20 +220,25 @@ const render = () => {
     context.font = 'normal 25px Courier';
     context.fillText('HUMIDITY', barPaddingX * 18.3 + textPaddingX, (screenHeight - barNamePadding), 120);
 
-    //TIME
+    //CITY TIME
     context.fillStyle = 'white';
     context.font = 'normal 20px Courier';
-    context.fillText(`Local Time: ${currentTime}`, 5, 65, 180);
+    context.fillText(`City Time: ${cityTime}`, 5, 65, 220);
+
+    //LOCAL TIME
+    context.fillStyle = 'white';
+    context.font = 'normal 20px Courier';
+    context.fillText(`Local Time: ${localTime}`, 5, 85, 220);
 
     //DATE
     context.fillStyle = 'white';
     context.font = 'normal 20px Courier';
-    context.fillText(currentDate, 5, 45, 180);
+    context.fillText(`Date: ${currentDate}`, 5, 45, 220);
 
     //TIMEZONE
     context.fillStyle = 'white';
     context.font = 'normal 20px Courier';
-    context.fillText(timeZone, 5, 85, 180);
+    context.fillText(timeZone, 5, 105, 220);
 
     //CITY
     context.fillStyle = 'white';
@@ -240,7 +249,8 @@ const render = () => {
 const update = () => {
     date = new Date();
     currentDate = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
-    currentTime = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    cityTime = `${date.getHours() + ((date.getTimezoneOffset() / -60 - 1) - utcOff) * -1}:${date.getMinutes()}:${date.getSeconds()}`;
+    localTime = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 
     if (date.getHours() >= 19 || date.getHours() <= 5) {
         currentGradient = nightGradient;
@@ -248,6 +258,9 @@ const update = () => {
     } else {
         currentGradient = dayGradient;
     }
+
+
+
 }
 
 // ENTRY POINT
