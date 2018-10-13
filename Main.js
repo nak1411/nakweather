@@ -7,7 +7,7 @@
  */
 
 //API
-const api = 'http://api.openweathermap.org/data/2.5/weather?q=seattle&APPID=d438c6c016bcdcf60c6d2534559d8b07';
+const api = 'http://api.openweathermap.org/data/2.5/weather?q=miami&APPID=d438c6c016bcdcf60c6d2534559d8b07';
 
 //CANVAS VARS
 let canvas = document.getElementById('game');
@@ -20,9 +20,10 @@ let lastTime = (new Date()).getTime();
 let currentTime = 0;
 let delta = 0;
 let running = false;
-let tempScale = 'fahrenheit';
-let barScale = 5;
-let barWidth;
+let tempScale = 'celsius';
+let humidityScale = 5;
+let barScale = 15;
+let barWidth = 150;
 let barHeight;
 let barPaddingX = 20;
 let barPaddingY = 10;
@@ -54,8 +55,10 @@ async function weatherData() {
  */
 const convert = (s, t) => {
     if (s === 'celsius') {
+        barScale = 14.6;
         return t;
     } else if (s === 'fahrenheit') {
+        barScale = 5;
         return Math.floor(t * 1.8 + 32);
     }
 }
@@ -80,8 +83,7 @@ const run = () => {
     if (running) {
         requestAnimationFrame(run);
         currentTime = (new Date()).getTime();
-        delta = (currentTime - lastTime) / 1000;
-        update();
+        delta = (currentTime - lastTime) / 1000 * 60;
         render();
         lastTime = currentTime;
     }
@@ -114,22 +116,22 @@ const render = () => {
      **/
 
     //MAX GRADIENT
-    let maxGradient = context.createLinearGradient(0, screenHeight, 0, 10 * barScale);
+    let maxGradient = context.createLinearGradient(0, screenHeight, 0, 10);
     maxGradient.addColorStop(0, "black");
     maxGradient.addColorStop(1, "red");
 
     //MIN GRADIENT
-    let minGradient = context.createLinearGradient(0, screenHeight, 0, 10 * barScale);
+    let minGradient = context.createLinearGradient(0, screenHeight, 0, 10);
     minGradient.addColorStop(0, "black");
     minGradient.addColorStop(1, "cyan");
 
     //TEMP GRADIENT
-    let tempGradient = context.createLinearGradient(0, screenHeight, 0, 10 * barScale);
+    let tempGradient = context.createLinearGradient(0, screenHeight, 0, 10);
     tempGradient.addColorStop(0, "black");
     tempGradient.addColorStop(1, "orange");
 
     //HUMIDITY GRADIENT
-    let humGradient = context.createLinearGradient(0, screenHeight, 0, 60 * barScale);
+    let humGradient = context.createLinearGradient(0, screenHeight, 0, 60);
     humGradient.addColorStop(0, "black");
     humGradient.addColorStop(1, "green");
 
@@ -143,11 +145,11 @@ const render = () => {
 
     //MINTEMP
     context.fillStyle = minGradient;
-    context.fillRect(barWidth + barPaddingX + barWidth / 2, screenHeight - convert(tempScale, minTemp) * barScale, barWidth / 2, convert(tempScale, minTemp) * 10);
+    context.fillRect(barWidth + barPaddingX + barWidth / 2, screenHeight - convert(tempScale, minTemp) * barScale, barWidth / 2, convert(tempScale, minTemp) * barScale);
 
     //HUMIDITY
     context.fillStyle = humGradient;
-    context.fillRect(barPaddingX * 20, screenHeight - humidity * barScale, barWidth, humidity * barScale);
+    context.fillRect(barPaddingX * 20, screenHeight - humidity * humidityScale, barWidth, humidity * humidityScale);
 
     /**
      * RENDER TEXT
@@ -186,16 +188,12 @@ const render = () => {
     //HUMIDITY
     context.fillStyle = 'black';
     context.font = 'normal bold 30px Courier';
-    context.fillText(`${humidity}%`, barPaddingX * 20 + textPaddingX, (screenHeight - humidity * barScale) + textPaddingY, 50);
+    context.fillText(`${humidity}%`, barPaddingX * 20 + textPaddingX, (screenHeight - humidity * humidityScale) + textPaddingY, 50);
 
     //HUMIDITY NAME
     context.fillStyle = 'white';
     context.font = 'normal 25px Courier';
     context.fillText('HUMIDITY', barPaddingX * 18.3 + textPaddingX, (screenHeight - barNamePadding), 120);
-}
-
-const update = () => {
-    barWidth = 150;
 }
 
 // ENTRY POINT
