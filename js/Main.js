@@ -6,18 +6,7 @@
  * a visual representation of the data in a responsive canvas window.
  */
 
-/**
- * API HANDLING
- **/
-let defaultApi = `http://api.openweathermap.org/data/2.5/weather?q=seattle&APPID=d438c6c016bcdcf60c6d2534559d8b07`;
-weatherData(defaultApi);
-
-document.getElementById("city-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    let city = document.getElementById("city-field").value;
-    let api = `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=d438c6c016bcdcf60c6d2534559d8b07`;
-    weatherData(api);
-});
+import Data from './Data.js';
 
 //CANVAS VARS
 let canvas = document.getElementById('game');
@@ -37,9 +26,7 @@ let tempScale = 'fahrenheit';
 let humidityScale = 5;
 let barScale = 15;
 let barWidth = 150;
-let barHeight;
 let barPaddingX = 20;
-let barPaddingY = 10;
 let textPaddingX = 50;
 let textPaddingY = 25;
 let barNamePadding = 10;
@@ -52,22 +39,24 @@ let temp;
 let maxTemp;
 let minTemp;
 let humidity;
+let timeZone;
+let data;
+let city;
 
-
-
-/**
- * FETCH DATA FROM OPENWEATHER
- */
-async function weatherData(api) {
-    let response = await fetch(api);
-    let json = await response.json();
-    console.log(json);
-    temp = Math.floor(json.main.temp - 273.15);
-    maxTemp = Math.floor(json.main.temp_max - 273.15);
-    minTemp = Math.floor(json.main.temp_min - 273.15);
-    humidity = json.main.humidity;
-}
-
+document.getElementById("city-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    city = document.getElementById("city-field").value;
+    data = new Data(city);
+    data.weather.then(function (result) {
+        temp = result.temp;
+        maxTemp = result.maxTemp;
+        minTemp = result.minTemp;
+        humidity = result.humidity;
+    });
+    data.timeZone.then(function (result) {
+        timeZone = result.timezone;
+    });
+});
 /**
  * CONVERT TEMPERATURE DATA SCALE
  */
@@ -89,6 +78,18 @@ const init = () => {
         return;
     } else {
         running = true;
+        city = 'Seattle';
+        data = new Data(city);
+        data.weather.then(function (result) {
+            temp = result.temp;
+            maxTemp = result.maxTemp;
+            minTemp = result.minTemp;
+            humidity = result.humidity;
+        });
+        data.timeZone.then(function (result) {
+            timeZone = result.timezone;
+        });
+
         createGradients();
         run();
     }
@@ -218,12 +219,22 @@ const render = () => {
     //TIME
     context.fillStyle = 'white';
     context.font = 'normal 20px Courier';
-    context.fillText(currentTime, 5, 40, 120);
+    context.fillText(`Local Time: ${currentTime}`, 5, 65, 180);
 
     //DATE
     context.fillStyle = 'white';
     context.font = 'normal 20px Courier';
-    context.fillText(currentDate, 5, 20, 120);
+    context.fillText(currentDate, 5, 45, 180);
+
+    //TIMEZONE
+    context.fillStyle = 'white';
+    context.font = 'normal 20px Courier';
+    context.fillText(timeZone, 5, 85, 180);
+
+    //CITY
+    context.fillStyle = 'white';
+    context.font = 'normal 30px Courier';
+    context.fillText(city.toUpperCase(), 5, 25, 180);
 }
 
 const update = () => {
