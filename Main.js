@@ -6,8 +6,18 @@
  * a visual representation of the data in a responsive canvas window.
  */
 
-//API
-const api = 'http://api.openweathermap.org/data/2.5/weather?q=miami&APPID=d438c6c016bcdcf60c6d2534559d8b07';
+/**
+ * API HANDLING
+ **/
+let defaultApi = `http://api.openweathermap.org/data/2.5/weather?q=seattle&APPID=d438c6c016bcdcf60c6d2534559d8b07`;
+weatherData(defaultApi);
+
+document.getElementById("city-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    let city = document.getElementById("city-field").value;
+    let api = `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=d438c6c016bcdcf60c6d2534559d8b07`;
+    weatherData(api);
+});
 
 //CANVAS VARS
 let canvas = document.getElementById('game');
@@ -20,7 +30,7 @@ let lastTime = (new Date()).getTime();
 let currentTime = 0;
 let delta = 0;
 let running = false;
-let tempScale = 'celsius';
+let tempScale = 'fahrenheit';
 let humidityScale = 5;
 let barScale = 15;
 let barWidth = 150;
@@ -40,7 +50,7 @@ let humidity;
 /**
  * FETCH DATA FROM OPENWEATHER
  */
-async function weatherData() {
+async function weatherData(api) {
     let response = await fetch(api);
     let json = await response.json();
     console.log(json);
@@ -72,7 +82,6 @@ const init = () => {
     } else {
         running = true;
         run();
-        weatherData();
     }
 }
 
