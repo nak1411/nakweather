@@ -6,6 +6,12 @@
  * a visual representation of the data in a responsive canvas window.
  */
 
+/**
+* TODO: 
+* PROBLEM: Bug with city time.  Time rolls past 24:00 instead of resetting to 00:00.
+* SOLUTION: Need to increment day by one and set cityTime to 00:00 
+**/
+
 import Data from './Data.js';
 
 //CANVAS VARS
@@ -30,6 +36,7 @@ let barPaddingX = 20;
 let textPaddingX = 50;
 let barNamePadding = 10;
 let currentGradient;
+let currentTempColor;
 let dayGradient;
 let nightGradient;
 
@@ -179,7 +186,7 @@ const render = () => {
      **/
 
     //MAXTEMP
-    context.fillStyle = 'black';
+    context.fillStyle = currentTempColor;
     context.font = 'normal bold 30px Courier';
     context.fillText(`${convert(tempScale, maxTemp)}°`, barPaddingX + (textPaddingX / 4), (screenHeight - convert(tempScale, maxTemp) * barScale), 50);
 
@@ -189,7 +196,7 @@ const render = () => {
     context.fillText('HIGH', barPaddingX + (textPaddingX / 4), (screenHeight - barNamePadding), 50);
 
     //MINTEMP
-    context.fillStyle = 'black';
+    context.fillStyle = currentTempColor;
     context.font = 'normal bold 30px Courier';
     context.fillText(`${convert(tempScale, minTemp)}°`, (textPaddingX * 2.2) + barWidth, (screenHeight - convert(tempScale, minTemp) * barScale), 50);
 
@@ -199,7 +206,7 @@ const render = () => {
     context.fillText('LOW', (textPaddingX * 2.2) + barWidth, (screenHeight - barNamePadding), 50);
 
     //TEMP
-    context.fillStyle = 'black';
+    context.fillStyle = currentTempColor;
     context.font = 'normal bold 30px Courier';
     context.fillText(`${convert(tempScale, temp)}°`, (barWidth / 2) + barPaddingX + textPaddingX, (screenHeight - convert(tempScale, temp) * barScale), 50);
 
@@ -209,7 +216,7 @@ const render = () => {
     context.fillText('TEMPERATURE', (barWidth / 2) + (textPaddingX / 1.5), (screenHeight - barNamePadding), 120);
 
     //HUMIDITY
-    context.fillStyle = 'black';
+    context.fillStyle = currentTempColor;
     context.font = 'normal bold 30px Courier';
     context.fillText(`${humidity}%`, barPaddingX * 20 + textPaddingX, (screenHeight - humidity * humidityScale), 50);
 
@@ -252,9 +259,11 @@ const update = () => {
 
     if (date.getHours() >= 19 || date.getHours() <= 5) {
         currentGradient = nightGradient;
+        currentTempColor = 'white';
 
     } else {
         currentGradient = dayGradient;
+        currentTempColor = 'black';
     }
 }
 
