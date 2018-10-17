@@ -5,12 +5,6 @@
  * This app fetches weather data using the OpenWeather API. It creates
  * a visual representation of the data in a responsive canvas window.
  */
-
-/**
- * TODO: 
- * PROBLEM: Bug with city time.  Time rolls past 24:00 instead of resetting to 00:00.
- * SOLUTION: Need to increment day by one and set cityTime to 00:00 
- **/
 import Data from './Data.js';
 
 let APP = (function () {
@@ -229,8 +223,17 @@ let APP = (function () {
 
     const update = () => {
         date = new Date();
-        currentDate = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
-        cityTime = `${date.getHours() + ((date.getTimezoneOffset() / -60 - 1) - utcOff) * -1}:${date.getMinutes()}:${date.getSeconds()}`;
+        let cityOff = (((date.getTimezoneOffset() / -60) - 1) - utcOff) * -1;
+
+        if ((date.getHours() + cityOff) >= 24) {
+            cityOff -= 1;
+            cityTime = `${cityOff}:${date.getMinutes()}:${date.getSeconds()}`;
+            currentDate = `${date.getMonth() + 1}-${date.getDate() + 1}-${date.getFullYear()}`;
+        } else {
+            cityTime = `${date.getHours() + cityOff}:${date.getMinutes()}:${date.getSeconds()}`;
+            currentDate = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
+        }
+
         localTime = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 
         if (date.getHours() >= 19 || date.getHours() <= 5) {
