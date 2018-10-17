@@ -15,10 +15,9 @@ let APP = (function () {
     let screenHeight = canvas.height;
 
     //VARS
-    let date;
-    let currentDate;
     let cityTime;
     let localTime;
+    let cityDate;
     let running = false;
     let tempScale = 'fahrenheit';
     let barScale = 15;
@@ -30,9 +29,9 @@ let APP = (function () {
     let minTemp;
     let humidity;
     let timeZone;
+    let timeZoneId;
     let data;
     let city;
-    let utcOff;
 
     /**
      * SUBMIT BUTTON TO CALL APIS
@@ -50,7 +49,7 @@ let APP = (function () {
         });
         data.timeZone.then(function (result) {
             timeZone = result.timezone;
-            utcOff = result.tzOff;
+            timeZoneId = result.timezoneId;
         });
 
 
@@ -77,6 +76,7 @@ let APP = (function () {
         } else {
             running = true;
             city = 'Seattle';
+            timeZoneId = 'America/Los_Angeles';
             data = new Data(city);
             data.weather.then(function (result) {
                 temp = result.temp;
@@ -86,7 +86,7 @@ let APP = (function () {
             });
             data.timeZone.then(function (result) {
                 timeZone = result.timezone;
-                utcOff = result.tzOff;
+                timeZoneId = result.timezoneId;
             });
             run();
         }
@@ -198,17 +198,17 @@ let APP = (function () {
         //CITY TIME
         context.fillStyle = 'white';
         context.font = 'normal 20px Courier';
-        context.fillText(`City Time: ${cityTime}`, 5, 65, 220);
+        context.fillText(`City Time: ${moment().tz(timeZoneId).format('h:mm:ss A')}`, 5, 65, 250);
 
         //LOCAL TIME
         context.fillStyle = 'white';
         context.font = 'normal 20px Courier';
-        context.fillText(`Local Time: ${localTime}`, 5, 85, 220);
+        context.fillText(`Local Time: ${localTime}`, 5, 85, 250);
 
         //DATE
         context.fillStyle = 'white';
         context.font = 'normal 20px Courier';
-        context.fillText(`Date: ${currentDate}`, 5, 45, 220);
+        context.fillText(`Date: ${moment().tz(timeZoneId).format('MM-DD-YY')}`, 5, 45, 250);
 
         //TIMEZONE
         context.fillStyle = 'white';
@@ -222,21 +222,9 @@ let APP = (function () {
     }
 
     const update = () => {
-        date = new Date();
-        let cityOff = (((date.getTimezoneOffset() / -60) - 1) - utcOff) * -1;
+        localTime = moment().format('h:mm:ss A');
 
-        if ((date.getHours() + cityOff) >= 24) {
-            cityOff -= 1;
-            cityTime = `${cityOff}:${date.getMinutes()}:${date.getSeconds()}`;
-            currentDate = `${date.getMonth() + 1}-${date.getDate() + 1}-${date.getFullYear()}`;
-        } else {
-            cityTime = `${date.getHours() + cityOff}:${date.getMinutes()}:${date.getSeconds()}`;
-            currentDate = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
-        }
-
-        localTime = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-
-        if (date.getHours() >= 19 || date.getHours() <= 5) {
+        if (moment().tz(timeZoneId).hour() >= 19 || moment().tz(timeZoneId).hour() <= 5) {
             createBackground('night');
             currentTempColor = 'white';
 

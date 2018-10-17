@@ -14,8 +14,7 @@ export default class Data {
       then(tz => {
         return {
           timezone: tz.tz,
-          dst: tz.dst,
-          tzOff: tz.tzOff / 3600
+          timezoneId: tz.tzId,
         }
       })
     }).
@@ -63,13 +62,11 @@ export default class Data {
     this.response = await fetch(api);
     this.json = await this.response.json();
     this.tz = this.json.timeZoneName;
-    this.dst = this.json.dstOffset;
-    this.tzOff = this.json.rawOffset;
+    this.tzId = this.json.timeZoneId;
     //console.log(this.json);
     return {
       tz: this.tz,
-      dst: this.dst,
-      tzOff: this.tzOff
+      tzId: this.tzId
     }
   }
 
