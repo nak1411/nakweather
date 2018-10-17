@@ -46,7 +46,7 @@ export default class Data {
     this.maxTemp = Math.floor(this.json.main.temp_max - 273.15);
     this.minTemp = Math.floor(this.json.main.temp_min - 273.15);
     this.humidity = this.json.main.humidity;
-    console.log(this.json);
+    //console.log(this.json);
     return {
       temp: this.temp,
       maxTemp: this.maxTemp,
@@ -65,7 +65,7 @@ export default class Data {
     this.tz = this.json.timeZoneName;
     this.dst = this.json.dstOffset;
     this.tzOff = this.json.rawOffset;
-    console.log(this.json);
+    //console.log(this.json);
     return {
       tz: this.tz,
       dst: this.dst,

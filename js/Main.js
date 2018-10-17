@@ -25,20 +25,10 @@ let APP = (function () {
     let currentDate;
     let cityTime;
     let localTime;
-    let lastTime = (new Date()).getTime();
-    let now = 0;
     let running = false;
     let tempScale = 'fahrenheit';
-    let humidityScale = 5;
     let barScale = 15;
-    let barWidth = 150;
-    let barPaddingX = 20;
-    let textPaddingX = 50;
-    let barNamePadding = 10;
-    let currentGradient;
     let currentTempColor;
-    let dayGradient;
-    let nightGradient;
 
     //API VARS
     let temp;
@@ -50,6 +40,9 @@ let APP = (function () {
     let city;
     let utcOff;
 
+    /**
+     * SUBMIT BUTTON TO CALL APIS
+     **/
     document.getElementById("city-form").addEventListener("submit", function (e) {
         e.preventDefault();
         city = document.getElementById("city-field").value;
@@ -89,7 +82,7 @@ let APP = (function () {
             return;
         } else {
             running = true;
-            city = 'Frankfurt';
+            city = 'Seattle';
             data = new Data(city);
             data.weather.then(function (result) {
                 temp = result.temp;
@@ -101,8 +94,6 @@ let APP = (function () {
                 timeZone = result.timezone;
                 utcOff = result.tzOff;
             });
-
-            createGradients();
             run();
         }
     }
@@ -113,119 +104,102 @@ let APP = (function () {
     const run = () => {
         if (running) {
             requestAnimationFrame(run);
-            now = (new Date()).getTime();
             update();
             render();
-            lastTime = now;
         }
     }
 
-    const createGradients = () => {
-        //DAY GRADIENT
-        dayGradient = context.createLinearGradient(0, screenHeight, 0, 100);
-        dayGradient.addColorStop(0, "cyan");
-        dayGradient.addColorStop(1, "blue");
+    const createBackground = (day) => {
+        let dayGradient;
+        let nightGradient;
 
-        //NIGHT GRADIENT
-        nightGradient = context.createLinearGradient(0, screenHeight, 0, 100);
-        nightGradient.addColorStop(0, "darkslateblue");
-        nightGradient.addColorStop(1, "black");
+        if (day === 'day') {
+            dayGradient = context.createLinearGradient(0, screenHeight, 0, 100);
+            dayGradient.addColorStop(0, "cyan");
+            dayGradient.addColorStop(1, "blue");
+            context.fillStyle = dayGradient;
+        }
+
+        if (day === 'night') {
+            nightGradient = context.createLinearGradient(0, screenHeight, 0, 100);
+            nightGradient.addColorStop(0, "darkslateblue");
+            nightGradient.addColorStop(1, "black");
+            context.fillStyle = nightGradient;
+        }
     }
 
     /**
      * RENDERING
      */
     const render = () => {
-        /**
-         * RENDER BACKGROUND
-         **/
+        let humidityScale = 5;
+        let barWidth = 150;
+        let barPaddingX = 20;
+        let textPaddingX = 50;
+        let barNamePadding = 10;
 
-        context.fillStyle = currentGradient;
+        //BACKGROUND FILL
         context.fillRect(0, 0, screenWidth, screenHeight);
 
         /**
          * RENDER BARS
          **/
 
-        //MAX GRADIENT
+        //MAXTEMP
         let maxGradient = context.createLinearGradient(0, screenHeight, 0, 100);
         maxGradient.addColorStop(0, "black");
         maxGradient.addColorStop(1, "red");
-
-        //MIN GRADIENT
-        let minGradient = context.createLinearGradient(0, screenHeight, 0, 100);
-        minGradient.addColorStop(0, "black");
-        minGradient.addColorStop(1, "cyan");
-
-        //TEMP GRADIENT
-        let tempGradient = context.createLinearGradient(0, screenHeight, 0, 100);
-        tempGradient.addColorStop(0, "black");
-        tempGradient.addColorStop(1, "orange");
-
-        //HUMIDITY GRADIENT
-        let humGradient = context.createLinearGradient(0, screenHeight, 0, 100);
-        humGradient.addColorStop(0, "black");
-        humGradient.addColorStop(1, "green");
-
-        //MAXTEMP
         context.fillStyle = maxGradient;
         context.fillRect(barPaddingX, screenHeight - convert(tempScale, maxTemp) * barScale, barWidth / 2, convert(tempScale, maxTemp) * barScale);
-
-        //TEMP
-        context.fillStyle = tempGradient;
-        context.fillRect((barWidth / 2) + barPaddingX, screenHeight - convert(tempScale, temp) * barScale, barWidth, convert(tempScale, temp) * barScale);
-
-        //MINTEMP
-        context.fillStyle = minGradient;
-        context.fillRect(barWidth + barPaddingX + barWidth / 2, screenHeight - convert(tempScale, minTemp) * barScale, barWidth / 2, convert(tempScale, minTemp) * barScale);
-
-        //HUMIDITY
-        context.fillStyle = humGradient;
-        context.fillRect(barPaddingX * 20, screenHeight - humidity * humidityScale, barWidth, humidity * humidityScale);
-
-        /**
-         * RENDER TEXT
-         **/
-
-        //MAXTEMP
         context.fillStyle = currentTempColor;
         context.font = 'normal bold 30px Courier';
         context.fillText(`${convert(tempScale, maxTemp)}°`, barPaddingX + (textPaddingX / 4), (screenHeight - convert(tempScale, maxTemp) * barScale), 50);
-
-        //MAXTEMP NAME
         context.fillStyle = 'white';
         context.font = 'normal 25px Courier';
         context.fillText('HIGH', barPaddingX + (textPaddingX / 4), (screenHeight - barNamePadding), 50);
 
         //MINTEMP
+        let minGradient = context.createLinearGradient(0, screenHeight, 0, 100);
+        minGradient.addColorStop(0, "black");
+        minGradient.addColorStop(1, "cyan");
+        context.fillStyle = minGradient;
+        context.fillRect(barWidth + barPaddingX + barWidth / 2, screenHeight - convert(tempScale, minTemp) * barScale, barWidth / 2, convert(tempScale, minTemp) * barScale);
         context.fillStyle = currentTempColor;
         context.font = 'normal bold 30px Courier';
         context.fillText(`${convert(tempScale, minTemp)}°`, (textPaddingX * 2.2) + barWidth, (screenHeight - convert(tempScale, minTemp) * barScale), 50);
-
-        //MINTEMP NAME
         context.fillStyle = 'white';
         context.font = 'normal 25px Courier';
         context.fillText('LOW', (textPaddingX * 2.2) + barWidth, (screenHeight - barNamePadding), 50);
 
         //TEMP
+        let tempGradient = context.createLinearGradient(0, screenHeight, 0, 100);
+        tempGradient.addColorStop(0, "black");
+        tempGradient.addColorStop(1, "orange");
+        context.fillStyle = tempGradient;
+        context.fillRect((barWidth / 2) + barPaddingX, screenHeight - convert(tempScale, temp) * barScale, barWidth, convert(tempScale, temp) * barScale);
         context.fillStyle = currentTempColor;
         context.font = 'normal bold 30px Courier';
         context.fillText(`${convert(tempScale, temp)}°`, (barWidth / 2) + barPaddingX + textPaddingX, (screenHeight - convert(tempScale, temp) * barScale), 50);
-
-        //TEMP NAME
         context.fillStyle = 'white';
         context.font = 'normal 25px Courier';
         context.fillText('TEMPERATURE', (barWidth / 2) + (textPaddingX / 1.5), (screenHeight - barNamePadding), 120);
 
         //HUMIDITY
+        let humGradient = context.createLinearGradient(0, screenHeight, 0, 100);
+        humGradient.addColorStop(0, "black");
+        humGradient.addColorStop(1, "green");
+        context.fillStyle = humGradient;
+        context.fillRect(barPaddingX * 20, screenHeight - humidity * humidityScale, barWidth, humidity * humidityScale);
         context.fillStyle = currentTempColor;
         context.font = 'normal bold 30px Courier';
         context.fillText(`${humidity}%`, barPaddingX * 20 + textPaddingX, (screenHeight - humidity * humidityScale), 50);
-
-        //HUMIDITY NAME
         context.fillStyle = 'white';
         context.font = 'normal 25px Courier';
         context.fillText('HUMIDITY', barPaddingX * 18.3 + textPaddingX, (screenHeight - barNamePadding), 120);
+
+        /**
+         * TEXT
+         **/
 
         //CITY TIME
         context.fillStyle = 'white';
@@ -260,11 +234,11 @@ let APP = (function () {
         localTime = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 
         if (date.getHours() >= 19 || date.getHours() <= 5) {
-            currentGradient = nightGradient;
+            createBackground('night');
             currentTempColor = 'white';
 
         } else {
-            currentGradient = dayGradient;
+            createBackground('day');
             currentTempColor = 'black';
         }
     }
