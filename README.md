@@ -4,16 +4,8 @@ A real-time visual weather app using OpenWeather and Google Map APIs.
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
 - [Support](#support)
 - [Contributing](#contributing)
-
-## Installation
-
-
-## Usage
-
 
 ## Support
 
