@@ -1,0 +1,164 @@
+@import 'normalize';
+$colors: (primary: #373737,
+secondary: darkred, background: aliceblue);
+
+@function color($color-name) {
+  @return map-get($colors, $color-name)
+}
+
+$desktop: 800px;
+$medium: 500px;
+$small: 350px;
+
+@mixin desktop {
+  @media (max-width: #{$desktop}) {
+    @content;
+  }
+}
+
+@mixin medium {
+  @media (max-width: #{$medium}) {
+    @content;
+  }
+}
+
+@mixin small {
+  @media (max-width: #{$small}) {
+    @content;
+  }
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  text-align: center;
+  margin: 0;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background-color: color(primary);
+
+  #title {
+    color: color(secondary);
+    font-size: 3em;
+    text-decoration: underline black dashed;
+
+    @include desktop {
+      font-size: 2em;
+    }
+
+    @include small {
+      font-size: 1.5em;
+    }
+
+  }
+
+  #game {
+    width: 50em;
+
+    @include desktop {
+      width: 30em;
+    }
+
+    @include medium {
+      width: 20em;
+    }
+
+    @include small {
+      width: 15em;
+    }
+  }
+
+  #city-form {
+    justify-content: center;
+    margin-top: .5em;
+    font-size: 2em;
+    color: color(secondary);
+
+    @include desktop {
+      margin-top: .3em;
+      font-size: 2em;
+    }
+
+    @include medium {
+      display: grid;
+      margin-top: .1em;
+      font-size: 1.5em;
+    }
+
+    #city-field {
+      outline: none;
+      vertical-align: middle;
+      padding: 1em;
+      background-color: color(background);
+      border: black solid;
+      border-radius: .5em;
+
+      @include desktop {
+        padding: .5em;
+        border-radius: .2em;
+      }
+
+      @include medium {
+        padding: .3em;
+        border-radius: .2em;
+      }
+    }
+
+    #city-search {
+      outline: none;
+      vertical-align: middle;
+      padding: 1em;
+      background-color: color(background);
+      border: black solid;
+      border-radius: .5em;
+
+      @include desktop {
+        padding: .5em;
+        border-radius: .2em;
+      }
+
+      @include medium {
+        margin-top: .2em;
+        padding: 1em;
+      }
+    }
+
+    #city-search:active {
+      background-color: lightslategray;
+      border: white solid;
+    }
+  }
+
+  #nak {
+    padding-top: 1em;
+    padding-bottom: .5em;
+    font-size: 1.5em;
+    color: color(secondary);
+
+    @include desktop {
+      font-size: 1em;
+    }
+
+    @include small {
+      font-size: .8em;
+    }
+  }
+
+  #gohome {
+    color: black;
+    text-decoration: none;
+    font-weight: bolder;
+    font-size: 1.5em;
+    border: dashed .08em;
+    border-radius: .15em;
+
+    @include desktop {
+      font-size: 1em;
+    }
+
+    @include small {
+      font-size: .5em;
+    }
+  }
+}

@@ -5,9 +5,13 @@
  * This app fetches weather data using the OpenWeather API. It creates
  * a visual representation of the data in a responsive canvas window.
  */
+import '../sass/main.scss';
+let moment = require('moment-timezone');
 import Data from './Data.js';
+import Particle from './Particle.js';
 
 let APP = (function () {
+    "use strict";
     //CANVAS VARS
     let canvas = document.getElementById('game');
     let context = canvas.getContext('2d');
@@ -15,13 +19,15 @@ let APP = (function () {
     let screenHeight = canvas.height;
 
     //VARS
-    let cityTime;
     let localTime;
-    let cityDate;
     let running = false;
     let tempScale = 'fahrenheit';
     let barScale = 15;
     let currentTempColor;
+    let emitter = [];
+    let pSpeed;
+    let velY = 0;
+    let velX = 0;
 
     //API VARS
     let temp;
@@ -88,6 +94,7 @@ let APP = (function () {
                 timeZone = result.timezone;
                 timeZoneId = result.timezoneId;
             });
+            createPrecipitation('rain');
             run();
         }
     }
@@ -122,6 +129,21 @@ let APP = (function () {
         }
     }
 
+    const createPrecipitation = (type) => {
+        if (type === 'rain') {
+            let maxP = 500;
+            pSpeed = 6;
+            let width = 1;
+            let height = 20;
+            let color = 'rgba(100, 100, 255, .8)';
+
+            for (let i = 0; i < maxP; i++) {
+                emitter.push(new Particle(screenWidth, screenHeight, width, height, color));
+            }
+            return emitter;
+        }
+    }
+
     /**
      * RENDERING
      */
@@ -132,8 +154,15 @@ let APP = (function () {
         let textPaddingX = 50;
         let barNamePadding = 10;
 
+
         //BACKGROUND FILL
         context.fillRect(0, 0, screenWidth, screenHeight);
+
+        for (let particle of emitter) {
+            context.fillStyle = particle.color;
+            context.fillRect(particle.x, particle.y + velY, particle.width, particle.height);
+        }
+
 
         /**
          * RENDER BARS
@@ -222,6 +251,7 @@ let APP = (function () {
     }
 
     const update = () => {
+
         localTime = moment().format('h:mm:ss A');
 
         if (moment().tz(timeZoneId).hour() >= 19 || moment().tz(timeZoneId).hour() <= 5) {
@@ -232,6 +262,15 @@ let APP = (function () {
             createBackground('day');
             currentTempColor = 'black';
         }
+
+        emitter = emitter.filter(e => {
+            return (e.y + velY <= screenHeight);
+        });
+
+        //console.log(emitter.length);
+        velY += pSpeed;
+        velX++;
+
     }
 
     return {
