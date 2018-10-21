@@ -1,7 +1,7 @@
-@import 'normalize';
-$colors: (primary: #373737,
-secondary: darkred, background: aliceblue);
-
+@import 'modules/mixins';
+@import 'modules/normalize';
+@import 'modules/nak-base';
+$colors: (primary: #373737, secondary: darkred, background: aliceblue);
 @function color($color-name) {
   @return map-get($colors, $color-name)
 }
@@ -9,7 +9,6 @@ secondary: darkred, background: aliceblue);
 $desktop: 800px;
 $medium: 500px;
 $small: 350px;
-
 @mixin desktop {
   @media (max-width: #{$desktop}) {
     @content;
@@ -28,134 +27,104 @@ $small: 350px;
   }
 }
 
-* {
-  margin: 0;
-}
-
-body {
+.app {
   text-align: center;
-  margin: 0;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  background-color: color(primary);
-
-  #title {
+  &__title {
     color: color(secondary);
     font-size: 5em;
     text-decoration: underline black dashed;
-
     @include desktop {
       font-size: 2em;
     }
-
     @include small {
       font-size: 1.5em;
     }
-
   }
-
-  #game {
+  &__canvas {
     width: 50em;
-
     @include desktop {
       width: 30em;
     }
-
     @include medium {
       width: 20em;
     }
-
     @include small {
       width: 15em;
     }
   }
-
-  #city-form {
+  &__form {
     justify-content: center;
     margin-top: .3em;
     font-size: 2em;
     color: color(secondary);
-
     @include desktop {
       margin-top: .1em;
       font-size: 1.2em;
     }
-
     @include medium {
       display: grid;
       margin-top: .1em;
       font-size: 1.2em;
     }
-
-    #city-field {
-      outline: none;
-      vertical-align: middle;
-      padding: .3em;
-      background-color: color(background);
-      border: black solid;
+  }
+  &__city {
+    outline: none;
+    vertical-align: middle;
+    padding: .3em;
+    background-color: color(background);
+    border: black solid;
+    border-radius: .2em;
+    @include desktop {
+      padding: .1em;
       border-radius: .2em;
-
-      @include desktop {
-        padding: .1em;
-        border-radius: .2em;
-      }
-
-      @include medium {
-        padding: .05em;
-      }
     }
-
-    #city-search {
-      outline: none;
-      vertical-align: middle;
-      padding: .3em;
-      background-color: color(background);
-      border: black solid;
+    @include medium {
+      padding: .05em;
+    }
+  }
+  &__submit {
+    outline: none;
+    vertical-align: middle;
+    padding: .3em;
+    background-color: color(background);
+    border: black solid;
+    border-radius: .5em;
+    @include desktop {
+      padding: .1em;
       border-radius: .2em;
-
-      @include desktop {
-        padding: .1em;
-        border-radius: .2em;
-      }
-
-      @include medium {
-        margin-top: .05em;
-        padding: .4em;
-      }
     }
-
-    #city-search:active {
-      background-color: lightslategray;
+    @include medium {
+      margin-top: .05em;
+      padding: .4em;
+    }
+    &:active {
+      background-color: darkslategray;
       border: white solid;
     }
   }
-
-  #nak {
+  &__nak {
     padding-top: 1em;
     padding-bottom: .5em;
     font-size: 1.5em;
     color: color(secondary);
-
     @include desktop {
       font-size: 1.2em;
     }
-
     @include small {
       font-size: 1em;
     }
   }
-
-  #gohome {
+  &__home {
     color: black;
     text-decoration: none;
     font-weight: bolder;
     font-size: 1.5em;
     border: dashed .08em;
     border-radius: .15em;
-
     @include desktop {
       font-size: 1em;
     }
-
     @include small {
       font-size: .8em;
     }

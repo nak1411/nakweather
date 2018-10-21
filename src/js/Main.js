@@ -13,7 +13,7 @@ import Particle from './Particle.js';
 let APP = (function () {
     "use strict";
     //CANVAS VARS
-    let canvas = document.getElementById('game');
+    let canvas = document.querySelector('.app__canvas');
     let context = canvas.getContext('2d');
     let screenWidth = canvas.width;
     let screenHeight = canvas.height;
@@ -42,10 +42,10 @@ let APP = (function () {
     /**
      * SUBMIT BUTTON TO CALL APIS
      **/
-    document.getElementById("city-form").addEventListener("submit", function (e) {
+    document.querySelector(".app__city").addEventListener("submit", function (e) {
         e.preventDefault();
-        city = document.getElementById("city-field").value;
-        document.getElementById("city-field").value = '';
+        city = document.querySelector(".app__city").value;
+        document.querySelector(".app__city").value = '';
         data = new Data(city);
         data.weather.then(function (result) {
             temp = result.temp;

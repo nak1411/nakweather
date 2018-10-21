@@ -14,8 +14,16 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 //Update plugins as needed per project
-const pluginsProd = [new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), new BundleAnalyzerPlugin(), new MiniCssExtractPlugin({filename: 'main.css'}), new MinifyPlugin(), new OptimizeCSSAssetsPlugin(), new HtmlWebpackPlugin({template: 'src/index.html'})];
-const pluginsDev = [new HtmlWebpackPlugin({template: 'src/index.html'}), new MiniCssExtractPlugin({filename: 'main.css'}), new HardSourceWebpackPlugin()];
+const pluginsProd = [new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), new BundleAnalyzerPlugin(), new MiniCssExtractPlugin({
+  filename: 'main.css'
+}), new MinifyPlugin(), new OptimizeCSSAssetsPlugin(), new HtmlWebpackPlugin({
+  template: 'src/index.html'
+})];
+const pluginsDev = [new HtmlWebpackPlugin({
+  template: 'src/index.html'
+}), new MiniCssExtractPlugin({
+  filename: 'main.css'
+}), new HardSourceWebpackPlugin()];
 
 //Checking mode to apply correct settings
 const isProd = process.env.NODE_ENV === 'production';
