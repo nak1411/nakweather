@@ -3,7 +3,7 @@
  * NakDev Webpack Config File
  */
 
-//Update imports as needed per project 
+// Update imports as needed per project 
 const path = require('path');
 const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -13,7 +13,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-//Update plugins as needed per project
+// Update plugins as needed per project
 const pluginsProd = [new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), new BundleAnalyzerPlugin(), new MiniCssExtractPlugin({
   filename: 'main.css'
 }), new MinifyPlugin(), new OptimizeCSSAssetsPlugin(), new HtmlWebpackPlugin({
@@ -25,7 +25,7 @@ const pluginsDev = [new HtmlWebpackPlugin({
   filename: 'main.css'
 }), new HardSourceWebpackPlugin()];
 
-//Checking mode to apply correct settings
+// Checking mode to apply correct settings
 const isProd = process.env.NODE_ENV === 'production';
 const toolProd = '';
 const toolDev = 'eval';
@@ -61,15 +61,14 @@ module.exports = {
         use: ['html-loader']
       },
       {
-        test: /\.(jpg|png)$/,
+        test: /\.(gif|png|jpe?g|svg)$/i,
         use: [{
-          loader: 'file-loader',
+          loader: 'url-loader',
           options: {
-            name: '[name].[ext]',
-            outputPath: 'img/',
-            publicPath: 'img/'
+            limit: 10000,
+            name: 'img/[name].[ext]'
           }
-        }],
+        }]
       }
     ]
   },

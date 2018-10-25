@@ -1,44 +1,18 @@
-@import 'modules/mixins';
-@import 'modules/normalize';
-@import 'modules/nak-base';
-$colors: (primary: #373737, secondary: darkred, background: aliceblue);
-@function color($color-name) {
-  @return map-get($colors, $color-name)
-}
-
-$desktop: 800px;
-$medium: 500px;
-$small: 350px;
-@mixin desktop {
-  @media (max-width: #{$desktop}) {
-    @content;
-  }
-}
-
-@mixin medium {
-  @media (max-width: #{$medium}) {
-    @content;
-  }
-}
-
-@mixin small {
-  @media (max-width: #{$small}) {
-    @content;
-  }
-}
+@import 'partials/base';
+@import 'partials/normalize';
 
 .app {
   text-align: center;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   &__title {
-    color: color(secondary);
+    color: color(primary);
     font-size: 5em;
-    text-decoration: underline black dashed;
+    text-decoration: color(secondary) underline dashed ;
     @include desktop {
       font-size: 2em;
     }
     @include small {
-      font-size: 1.5em;
+      font-size: 1.5em; 
     }
   }
   &__canvas {
@@ -57,7 +31,7 @@ $small: 350px;
     justify-content: center;
     margin-top: .3em;
     font-size: 2em;
-    color: color(secondary);
+    color: color(primary);
     @include desktop {
       margin-top: .1em;
       font-size: 1.2em;
@@ -72,8 +46,8 @@ $small: 350px;
     outline: none;
     vertical-align: middle;
     padding: .3em;
-    background-color: color(background);
-    border: black solid;
+    background-color: color(field);
+    border: color(primary) solid;
     border-radius: .2em;
     @include desktop {
       padding: .1em;
@@ -87,8 +61,8 @@ $small: 350px;
     outline: none;
     vertical-align: middle;
     padding: .3em;
-    background-color: color(background);
-    border: black solid;
+    background-color: color(field);
+    border: color(primary) solid;
     border-radius: .5em;
     @include desktop {
       padding: .1em;
@@ -99,15 +73,15 @@ $small: 350px;
       padding: .4em;
     }
     &:active {
-      background-color: darkslategray;
-      border: white solid;
+      background-color: color(active);
+      border: color(primary) solid;
     }
   }
   &__nak {
     padding-top: 1em;
     padding-bottom: .5em;
     font-size: 1.5em;
-    color: color(secondary);
+    color: color(primary);
     @include desktop {
       font-size: 1.2em;
     }
@@ -116,11 +90,11 @@ $small: 350px;
     }
   }
   &__home {
-    color: black;
+    color: color(primary);
     text-decoration: none;
     font-weight: bolder;
     font-size: 1.5em;
-    border: dashed .08em;
+    border: color(secondary) dashed .08em;
     border-radius: .15em;
     @include desktop {
       font-size: 1em;

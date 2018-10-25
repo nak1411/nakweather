@@ -42,7 +42,7 @@ let APP = (function () {
     /**
      * SUBMIT BUTTON TO CALL APIS
      **/
-    document.querySelector(".app__city").addEventListener("submit", function (e) {
+    document.querySelector(".app__form").addEventListener("submit", function (e) {
         e.preventDefault();
         city = document.querySelector(".app__city").value;
         document.querySelector(".app__city").value = '';

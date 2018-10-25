@@ -1,0 +1,11 @@
+$colors: (primary: rgb(243, 57, 0),
+secondary: rgb(212, 212, 212),
+field: rgb(134, 134, 134),
+active: rgb(194, 194, 194),
+back: rgb(29, 29, 29));
+
+
+// Return color 
+@function color($color-name) {
+  @return map-get($colors, $color-name)
+}
