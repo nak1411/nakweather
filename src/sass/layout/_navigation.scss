@@ -1,0 +1,16 @@
+&__list {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+  font-size: 3em;
+  list-style: none;
+  background-color: color(back); 
+}
+
+&__item-home{
+  text-decoration: none;
+  color:color(primary);
+  border: color(primary) solid;
+}

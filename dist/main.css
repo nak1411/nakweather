@@ -1,29 +1,45 @@
 body {
-  background: url(img/back.png); }
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGwAAAB0CAIAAADvgUBsAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDowNzdDQTMwMkQ0MjcxMUUxOUUyRkQxMEVEM0JFOEIzMCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDowNzdDQTMwM0Q0MjcxMUUxOUUyRkQxMEVEM0JFOEIzMCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjA3N0NBMzAwRDQyNzExRTE5RTJGRDEwRUQzQkU4QjMwIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjA3N0NBMzAxRDQyNzExRTE5RTJGRDEwRUQzQkU4QjMwIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+lagURgAABIdJREFUeNrsneluIjEQhAMEgjgkHgEJkT/h/d+M+wpLSaMWXiMPdrdtUv1jFK2iMMuUv6720dOZz+cfJcVkMrldT6fT7Xo4HG7Xy+XyUXZ0PxjR8VnaDe33++ZnaHA2m92um82m0SaVSCUm//jPfzfQ6/UaDR6Px4ffkf/S6XRu1+v1SiW+W3TyZuevr69GayDgaDRqCOi96bseh8Nho9+8GZxKrIeJ0I7U3fl8fsjFiBDe4XeQqcFTKpFMbJOFoUc3/z6PEEpKwkqdUol/m4nQHa673a6phbUD6hsMBsaOkkoslYmu+9MgYJBGut3mfvQcJZWYm4ngDhgE3wf2ue4vPNJSDLrDmNBzlFRibiYi/4I7er4sLSURqLsxetr6VioxNxPBlH6/b+z+NALUBs3JxNqYCLcF9YEmtRCw7Thru8pIJeowUbo/6bNi3F+MT4Q6cCd6IwB/Gf93+A0qMTcTQQdctWflpOrxWa4SJa0wGixX+0IcJZWYQgqLxaLRwna7Nf54fC6UFV45gFlQaHy9ET5WfFmBSkzxRX9/fzdjXi/3yVr7tZUWVx2gZFsVx8d4PL5d1+s1lZhUHDarYtBOKor51vNALtRUeivRrjegElNI5Ofn52GEp9IdmKWtC5+jxDyTTVCJOrVzqiwMdljuknE9BrQJX5kqg7sr2lSiTu38Golsau0YOmNMxM/G0yeWx0Q8ZxDQsmbI6yjpE3P7xFzuT88/yH1r9In1MBH51979aQRGkszU4Y6SPtHWJ5bs/lTq37sGJfF9s6v0ibZMLNn9aQQo766iuI6SPlGHiavVqqGezUpLjY5SnoOlT9T5ot/J/dk4SnfNkkrU9IkMX0yn00aDVGKO2pmBgHuRcz9UYgomaqw7/7WgEsnELLq7z/fI3b1UYgomLpfLB3deWv+j0gK9y5BF6BPTMRHqw4wu4z9fkDOLAw7KmVYqUccnym5KtfTS1IuQfhZUoo5PlPvxS+jEZTQkxXkVudrnzmZz3VnnAYTPJ752+qmuLBxyxobrzrlrZzwfOMoye7vGuL/wHbRcd7byiTHzGbXk8bRnr6hEWya6ITtEtO2bYOn+wHG5vyNmnxt9Ym6f2LbelDrNFRonqugTy2OiL0Ac+zlK95Spxj43+sTyfGJbRwmNvNZr1t790SfWz0SfowSb4h2l7+yoZT8L+sQafKK2o9Rwf/SJuZkou2TbnxsIcZRyrkjP/dEn5mai7FqH55x3vtrtKZt3rIR0eKQSUzARz1Z2TgSDsAphf77Ufc55z7hKN+obo1Sijk/0dTcuh5KKA/OltylQiTq1M0a+7+Tvu55ElT1+2lKYSrStnfGUkK30+iDbEFByP35+k0rUYaIvfL1k0nYssamXpPvjDojamPicLPJtaaVRMqSPA5VYDxPDHWXMGyTLcX9UYj1M1HCUMQT0nQDQDioxNxPDHWX43vwYnyj7e1tW91RiqUz00Uq++S/cUfooCd8H9dm8yY1KrI2JPtK5fYRjHKV822PeoBLrYeLzfCr7XbsE9J0AKCeoxATxK8AAaZhUcIQhhdwAAAAASUVORK5CYII=);
+  background-size: 3em; }
 
 .app {
   text-align: center;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; }
+  font-family: 'Courier', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; }
   .app__title {
-    color: #f33900;
+    margin: 0;
+    padding-top: 1em;
+    color: #c92901;
     font-size: 5em;
-    text-decoration: #d4d4d4 underline dashed; }
-    @media only screen and (max-width: 800px) {
+    text-decoration: #a5a5a5 underline dashed; }
+    @media only screen and (max-width: 840px) {
       .app__title {
         font-size: 2em; } }
     @media only screen and (max-width: 350px) {
       .app__title {
         font-size: 1.5em; } }
+  .app__list {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    font-size: 3em;
+    list-style: none;
+    background-color: #0e0e0e; }
+  .app__item-home {
+    text-decoration: none;
+    color: #c92901;
+    border: #c92901 solid; }
   .app__form {
     justify-content: center;
     margin-top: .3em;
     font-size: 2em;
-    color: #f33900; }
-    @media only screen and (max-width: 800px) {
+    color: #c92901; }
+    @media only screen and (max-width: 840px) {
       .app__form {
         margin-top: .1em;
         font-size: 1.2em; } }
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 515px) {
       .app__form {
         display: grid;
         margin-top: .1em;
@@ -32,67 +48,59 @@ body {
     padding-top: 1em;
     padding-bottom: .5em;
     font-size: 1.5em;
-    color: #f33900; }
-    @media only screen and (max-width: 800px) {
+    color: #c92901; }
+    @media only screen and (max-width: 840px) {
       .app__nak {
         font-size: 1.2em; } }
     @media only screen and (max-width: 350px) {
       .app__nak {
         font-size: 1em; } }
-  .app__home {
-    color: #f33900;
-    text-decoration: none;
-    font-weight: bolder;
-    font-size: 1.5em;
-    border: #d4d4d4 dashed 0.08em;
-    border-radius: .15em; }
-    @media only screen and (max-width: 800px) {
-      .app__home {
-        font-size: 1em; } }
-    @media only screen and (max-width: 350px) {
-      .app__home {
-        font-size: .8em; } }
   .app__canvas {
-    width: 50em; }
-    @media only screen and (max-width: 800px) {
+    width: 50em;
+    border: #0e0e0e solid 0.5em;
+    border-radius: .5em; }
+    @media only screen and (max-width: 840px) {
       .app__canvas {
         width: 30em; } }
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 515px) {
       .app__canvas {
         width: 20em; } }
     @media only screen and (max-width: 350px) {
       .app__canvas {
         width: 15em; } }
   .app__submit {
+    padding: .5em;
     outline: none;
     vertical-align: middle;
-    padding: .3em;
-    background-color: #868686;
-    border: #f33900 solid;
-    border-radius: .5em; }
-    @media only screen and (max-width: 800px) {
+    background-color: #0e0e0e;
+    color: #a5a5a5;
+    border: #c92901 groove;
+    border-radius: .5em;
+    cursor: pointer; }
+    @media only screen and (max-width: 840px) {
       .app__submit {
-        padding: .1em;
+        padding: .3em;
         border-radius: .2em; } }
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 515px) {
       .app__submit {
-        margin-top: .05em;
+        margin-top: .5em;
         padding: .4em; } }
     .app__submit:active {
       background-color: #c2c2c2;
-      border: #f33900 solid; }
+      border: #c92901 solid; }
   .app__city {
     outline: none;
     vertical-align: middle;
-    padding: .3em;
-    background-color: #868686;
-    border: #f33900 solid;
+    padding: .5em;
+    background-color: #0e0e0e;
+    color: #a5a5a5;
+    border: #c92901 groove;
     border-radius: .2em; }
-    @media only screen and (max-width: 800px) {
+    @media only screen and (max-width: 840px) {
       .app__city {
-        padding: .1em;
+        padding: .3em;
         border-radius: .2em; } }
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 515px) {
       .app__city {
         padding: .05em; } }
 

@@ -1,16 +1,18 @@
 &__submit {
+  padding: .5em;
   outline: none;
   vertical-align: middle;
-  padding: .3em;
-  background-color: color(field);
-  border: color(primary) solid;
+  background-color: color(back);
+  color: color(secondary);
+  border: color(primary) groove;
   border-radius: .5em;
+  cursor: pointer;
   @include large {
-    padding: .1em;
+    padding: .3em;
     border-radius: .2em;
   }
   @include medium {
-    margin-top: .05em;
+    margin-top: .5em;
     padding: .4em;
   }
   &:active {

@@ -1,6 +1,7 @@
 &__canvas {
   width: 50em;
-
+  border: color(back) solid .5em;
+  border-radius: .5em;
   @include large {
     width: 30em;
   }
