@@ -1,0 +1,26 @@
+&__nak {
+  padding-top: 1em;
+  padding-bottom: .5em;
+  font-size: 1.5em;
+  color: color(primary);
+  @include large {
+    font-size: 1.2em;
+  }
+  @include small {
+    font-size: 1em;
+  }
+}
+&__home {
+  color: color(primary);
+  text-decoration: none;
+  font-weight: bolder;
+  font-size: 1.5em;
+  border: color(secondary) dashed .08em;
+  border-radius: .15em;
+  @include large {
+    font-size: 1em;
+  }
+  @include small {
+    font-size: .8em;
+  }
+}

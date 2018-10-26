@@ -1,0 +1,15 @@
+&__form {
+  justify-content: center;
+  margin-top: .3em;
+  font-size: 2em;
+  color: color(primary);
+  @include large {
+    margin-top: .1em;
+    font-size: 1.2em;
+  }
+  @include medium {
+    display: grid;
+    margin-top: .1em;
+    font-size: 1.2em;
+  }
+}

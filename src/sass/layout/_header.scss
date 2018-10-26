@@ -1,0 +1,11 @@
+&__title {
+  color: color(primary);
+  font-size: 5em;
+  text-decoration: color(secondary) underline dashed ;
+  @include large {
+    font-size: 2em;
+  }
+  @include small {
+    font-size: 1.5em; 
+  }
+}

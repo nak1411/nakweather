@@ -1,0 +1,36 @@
+// Initial Setup 
+@mixin init {
+  text-align: center;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+// Media queries
+@mixin huge {
+  @media only screen and (max-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media only screen and (max-width: 800px) {
+    @content;
+  }
+}
+
+@mixin medium {
+  @media only screen and (max-width: 500px) {
+    @content;
+  }
+}
+
+@mixin small {
+  @media only screen and (max-width: 350px) {
+    @content;
+  }
+}
+
+@mixin tiny {
+  @media only screen and (max-width: 200px) {
+    @content;
+  }
+}

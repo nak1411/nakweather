@@ -1,0 +1,15 @@
+&__canvas {
+  width: 50em;
+
+  @include large {
+    width: 30em;
+  }
+
+  @include medium {
+    width: 20em;
+  }
+
+  @include small {
+    width: 15em;
+  }
+}
