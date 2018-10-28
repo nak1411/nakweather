@@ -7,6 +7,7 @@
   border: color(primary) groove;
   border-radius: .5em;
   cursor: pointer;
+  font-family: $fontPrimary;
   @include large {
     padding: .3em;
     border-radius: .2em;

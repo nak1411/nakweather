@@ -1,7 +1,7 @@
 // Initial Setup 
 @mixin init {
   text-align: center;
-  font-family: 'Courier', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: $fontPrimary;
 }
 
 // Media queries
