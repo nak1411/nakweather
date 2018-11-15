@@ -14,12 +14,18 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // Update plugins as needed per project
-const pluginsProd = [new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), new BundleAnalyzerPlugin(), new MiniCssExtractPlugin({
+const pluginsProd = [new webpack.ProvidePlugin({
+  $: 'jquery',
+  jQuery: 'jquery'
+}), new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), new BundleAnalyzerPlugin(), new MiniCssExtractPlugin({
   filename: 'main.css'
 }), new MinifyPlugin(), new OptimizeCSSAssetsPlugin(), new HtmlWebpackPlugin({
   template: 'src/index.html'
 })];
-const pluginsDev = [new HtmlWebpackPlugin({
+const pluginsDev = [new webpack.ProvidePlugin({
+  $: 'jquery',
+  jQuery: 'jquery'
+}), new HtmlWebpackPlugin({
   template: 'src/index.html'
 }), new MiniCssExtractPlugin({
   filename: 'main.css'
